@@ -40,6 +40,7 @@ async function handleEvent(eventObject) {
 }
 
 async function handleMessage(messageObject) {
+  const botPhoneNumber = messageObject.metadata.phone_number_id;
   const userPhoneNumber = messageObject.messages[0].from;
   const messageBody = messageObject.messages[0].text.body;
 
