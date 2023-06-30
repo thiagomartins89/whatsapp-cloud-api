@@ -35,14 +35,18 @@ app.get("/webhook", (req, res) => {
 async function handleEvent(eventObject) {
   const entry = eventObject.entry?.[0]?.changes?.[0]?.value;
   if (entry?.messages?.[0]) {
+    console.log(eventObject);
     await handleMessage(entry);
   }
 }
 
 async function handleMessage(messageObject) {
-  const botPhoneNumber = messageObject.metadata.phone_number_id;
+  let botPhoneNumber = messageObject.metadata.phone_number_id;
   const userPhoneNumber = messageObject.messages[0].from;
   const messageBody = messageObject.messages[0].text.body;
+
+  console.log(botPhoneNumber);
+  botPhoneNumber = "+1 555 073 3144";
 
   const url = `https://graph.facebook.com/v17.0/${botPhoneNumber}/messages`;
   const headers = {
