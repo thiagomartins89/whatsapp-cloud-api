@@ -12,30 +12,9 @@ const app = express().use(body_parser.json());
 
 app.listen(port, () => console.log(`Webhook is listening on port ${port}`));
 
-app.post("/webhook", (req, res) => {
-  const body = req.body;
-
-  if (body.object) {
-    const entry = body.entry?.[0]?.changes?.[0]?.value;
-
-    if (entry?.messages?.[0]) {
-      const phone_number_id = entry.metadata.phone_number_id;
-      const from = entry.messages[0].from;
-      const msg_body = entry.messages[0].text.body;
-
-      axios.post(
-        `https://graph.facebook.com/v12.0/${phone_number_id}/messages?access_token=${token}`,
-        {
-          messaging_product: "whatsapp",
-          to: from,
-          text: { body: msg_body },
-        },
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-    }
-
+app.post("/webhook", async (req, res) => {
+  if (req.body.object) {
+    handleEvent(req.body);
     res.sendStatus(200);
   } else {
     res.sendStatus(404);
@@ -52,3 +31,40 @@ app.get("/webhook", (req, res) => {
     res.sendStatus(token && mode ? 403 : 200);
   }
 });
+
+async function handleEvent(eventObject) {
+  const entry = messageObject.entry?.[0]?.changes?.[0]?.value;
+  if (entry?.messages?.[0]) {
+    await handleMessage(entry);
+  }
+}
+
+async function handleMessage(messageObject) {
+  const userPhoneNumber = entry.messages[0].from;
+  const messageBody = entry.messages[0].text.body;
+
+  const url = `https://graph.facebook.com/v17.0/${botPhoneNumber}/messages`;
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json",
+  };
+
+  const data = {
+    messaging_product: "whatsapp",
+    recipient_type: "individual",
+    to: userPhoneNumber,
+    type: "text",
+    text: {
+      body: messageBody,
+    },
+  };
+
+  axios
+    .post(url, data, { headers })
+    .then((response) => {
+      console.log("Resposta:", response.data);
+    })
+    .catch((error) => {
+      console.error("Erro:", error.message);
+    });
+}
