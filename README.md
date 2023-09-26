@@ -1,18 +1,18 @@
 # WhatsApp Cloud API
 
-Projeto de webhook para WhatsApp utilizando a Cloud API.
+Este projeto é uma solução básica que utiliza a API oficial do WhatsApp para receber e enviar mensagens. É necessário possuir um número de telefone vinculado ao WhatsApp Business API.
 
 ## Instalação
 
-1. Clone o repositório.
-2. Instale as dependências com `npm install`.
-3. Crie um arquivo `.env` na raiz do projeto e preencha as variáveis de ambiente necessárias (consulte `src/config/env.js`).
-4. Inicie o servidor com `npm start`.
+1. Clonar o repositório.
+2. Instalar as dependências com `npm install`.
+3. Criar um arquivo `.env` na raiz do projeto e preencher as variáveis de ambiente necessárias (consultar `src/config/env.js`).
+4. Inicializar o servidor com `npm start`.
 
 ## Configuração
 
-1. Atribua uma chave de valor arbitrário à variável de ambiente `VERIFY_TOKEN`.
-2. Informe a chave definida na página de configuração do webhook no portal *Meta for Developers*.
+1. Atribuir uma chave de valor arbitrário à variável de ambiente `VERIFY_TOKEN`.
+2. Inserir essa mesma chave na página de configuração do webhook no portal *Meta for Developers*.
 
 ## Uso
 
