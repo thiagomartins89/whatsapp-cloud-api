@@ -6,7 +6,7 @@ Este projeto é uma solução básica que utiliza a API oficial do WhatsApp para
 
 1. Clonar o repositório.
 2. Instalar as dependências com `npm install`.
-3. Criar um arquivo `.env` na raiz do projeto e preencher as variáveis de ambiente necessárias (consultar `src/config/env.js`).
+3. Criar o arquivo `.env` na raiz do projeto e preencher as variáveis de ambiente necessárias (consultar `.env.example`).
 4. Inicializar o servidor com `npm start`.
 
 ## Configuração
