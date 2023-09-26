@@ -1,4 +1,5 @@
 const { sendMessage } = require("./sendMessageService");
+const { sendSeen } = require("./sendSeenService");
 
 /**
  * Manipula uma mensagem recebida através da WhatsApp Cloud API.
@@ -6,11 +7,13 @@ const { sendMessage } = require("./sendMessageService");
  */
 exports.handleMessage = async (eventObject) => {
   console.log(JSON.stringify(eventObject, null, 2));
-  const userPhoneNumber = eventObject.entry?.[0]?.changes?.[0]?.value.messages[0].from;
-  const messageBody = eventObject.entry?.[0]?.changes?.[0]?.value.messages[0].text.body;
+  const userPhoneNumber = eventObject?.entry?.[0]?.changes?.[0]?.value?.messages?.[0]?.from;
+  const messageBody = eventObject?.entry?.[0]?.changes?.[0]?.value?.messages?.[0]?.text?.body;
+  const messageId = eventObject?.entry?.[0]?.changes?.[0]?.value?.messages?.[0]?.id;
 
   try {
-    await sendMessage(userPhoneNumber, `Replicando a mensagem recebida: ${messageBody}`);
+    await sendSeen(messageId);
+    await sendMessage(userPhoneNumber, `Echo: ${messageBody}`);
   } catch (error) {
     console.log(error);
   }
